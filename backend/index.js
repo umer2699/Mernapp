@@ -1,10 +1,32 @@
 const express = require('express')
 const mongoose=require('mongoose')
 const axios = require('axios');
+const cors = require('cors');
 const app = express()
-const port=3000
+const port=5000
 const months = ["January", "February","March","April","May","June","July","August","September","October","November","December"];
 app.use(express.json())
+
+
+const allowedOrigins = ['http://localhost:3000'];
+
+// Configure CORS options
+const corsOptions = {
+  origin: allowedOrigins,
+  optionsSuccessStatus: 200,
+};
+
+// Enable CORS for all routes
+app.use(cors(corsOptions));
+
+
+
+
+
+
+
+
+
 
 
 //fetching all data 
@@ -200,7 +222,7 @@ app.get('/pie-chart', async (req, res) => {
 
 
 
-//API ALL 3 COMBINED 
+//API ALL 3COMBINED 
 app.get('/combined-data', async (req, res) => {
   try {
     const prefferedMonth = req.query.month;

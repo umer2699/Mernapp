@@ -1,31 +1,17 @@
-
-import './App.css';
-
-import Home from './screens/Home';
-
-
-import {BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import React from 'react';
+import TransactionsTable from './components/TransactionTable';
+import TransactionStatistics from './components/Transactionstatistics';
+import TransactionsBarChart from './components/TransactionBarChart';
 
 
-
-function App() {
+const App = () => {
   return (
-    <Router>
-     
-       <div className='main'>
-          <Routes>
-           <Route exact path="/" element={<Home/>}></Route>
-          
-          
-  
-         
-         
-         </Routes>
-         
-         </div>
-     
-    </Router>
+    <div>
+      <TransactionsTable />
+      <TransactionStatistics />
+      <TransactionsBarChart />
+    </div>
   );
-}
+};
 
 export default App;

@@ -1,23 +1,72 @@
-.navbar-brand{
-    text-align: center;
-    margin: auto;
-   width: 50%;
-   border: 3px ;
-   padding: 10px;
+/* app.css */
+
+/* Common styles */
+body {
+  font-family: Arial, sans-serif;
 }
 
-.dropdown{
-    
-    margin: auto;
-    padding-left: 80%;
-   
-    padding-bottom: 5%;
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.search{
-    margin: auto;
-    padding-right: 80%;
-    padding-top: 5%;
-   
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+select,
+input[type="text"],
+button {
+  margin-right: 10px;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 10px;
+  text-align: left;
+}
+
+/* TransactionsTable styles */
+table th {
+  background-color: #f2f2f2;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.pagination button {
+  background-color: #e0e0e0;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #ccc;
+}
+
+.pagination button:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
 }
 
