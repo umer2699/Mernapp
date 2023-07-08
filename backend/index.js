@@ -1,7 +1,6 @@
-// app.js
 const express = require('express')
 const mongoose=require('mongoose')
-
+const axios = require('axios');
 const app = express()
 const port=3000
 const months = ["January", "February","March","April","May","June","July","August","September","October","November","December"];
@@ -18,7 +17,7 @@ app.get('/product',async(req,res)=>{
   })
 })
 
-//As per page And search 
+//ApI for transactions As per page And search 
 app.get('/transactions', async (req, res) => {
   const search = req.query.search || '';
   const page = parseInt(req.query.page) || 1;
@@ -59,8 +58,8 @@ app.get('/transactions', async (req, res) => {
 
 
 // app.get('/product/statistics',async(req,res)=>{
-//   const selectedMonth = req.query.month;
-//   const index = months.indexOf(selectedMonth);
+//   const prefferedMonth = req.query.month;
+//   const index = months.indexOf(prefferedMonth);
 //   console.log(index);
   
 
@@ -87,7 +86,7 @@ app.get('/transactions', async (req, res) => {
 
 // API FOR STATISTICS
 app.get('/statistics', async (req, res) => {
-  const selectedMonth = req.query.month;
+  const prefferedMonth = req.query.month;
 
   const fetched_data = await mongoose.connection.db.collection("sample");
   fetched_data.find({}).toArray(async function (err, data) {
@@ -97,7 +96,7 @@ app.get('/statistics', async (req, res) => {
     } else {
       const filteredData = data.filter(item => {
         const month = new Date(item.dateOfSale).toLocaleString('default', { month: 'long' });
-        return month.toLowerCase() === selectedMonth.toLowerCase();
+        return month.toLowerCase() === prefferedMonth.toLowerCase();
       });
 
       const  TotalSale= filteredData.reduce((sum, item) => sum + item.price, 0);
@@ -114,7 +113,118 @@ app.get('/statistics', async (req, res) => {
 });
 
 
+//API for bar-chart
+app.get('/bar-chart', async (req, res) => {
+  const prefferedMonth = req.query.month;
 
+  const collection = mongoose.connection.db.collection("sample");
+  const query = {
+    dateOfSale: {
+      $regex: `\\d{4}-${prefferedMonth.padStart(2, '0')}-\\d{2}`,
+      $options: 'i'
+    }
+  };
+
+  const filteredData = await collection.find(query).toArray();
+
+  const priceRanges = [
+    { range: '0 - 100', count: 0 },
+    { range: '101 - 200', count: 0 },
+    { range: '201 - 300', count: 0 },
+    { range: '301 - 400', count: 0 },
+    { range: '401 - 500', count: 0 },
+    { range: '501 - 600', count: 0 },
+    { range: '601 - 700', count: 0 },
+    { range: '701 - 800', count: 0 },
+    { range: '801 - 900', count: 0 },
+    { range: '901 - above', count: 0 }
+  ];
+
+  filteredData.forEach(item => {
+    const price = item.price;
+    if (price >= 0 && price <= 100) {
+      priceRanges[0].count++;
+    } else if (price >= 101 && price <= 200) {
+      priceRanges[1].count++;
+    } else if (price >= 201 && price <= 300) {
+      priceRanges[2].count++;
+    } else if (price >= 301 && price <= 400) {
+      priceRanges[3].count++;
+    } else if (price >= 401 && price <= 500) {
+      priceRanges[4].count++;
+    } else if (price >= 501 && price <= 600) {
+      priceRanges[5].count++;
+    } else if (price >= 601 && price <= 700) {
+      priceRanges[6].count++;
+    } else if (price >= 701 && price <= 800) {
+      priceRanges[7].count++;
+    } else if (price >= 801 && price <= 900) {
+      priceRanges[8].count++;
+    } else {
+      priceRanges[9].count++;
+    }
+  });
+
+  res.status(200).json(priceRanges);
+});
+
+
+
+//APi for pie-chart
+app.get('/pie-chart', async (req, res) => {
+  const prefferedMonth = req.query.month;
+
+  const collection = mongoose.connection.db.collection("sample");
+  const query = {
+    dateOfSale: {
+      $regex: `\\d{4}-${prefferedMonth.padStart(2, '0')}-\\d{2}`,
+      $options: 'i'
+    }
+  };
+
+  const filteredData = await collection.find(query).toArray();
+
+  const categoryCounts = {};
+
+  filteredData.forEach(item => {
+    const category = item.category;
+    categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+  });
+
+  const pieChartData = Object.entries(categoryCounts).map(([category, count]) => {
+    return { category, count };
+  });
+
+  res.status(200).json(pieChartData);
+});
+
+
+
+//API ALL 3 COMBINED 
+app.get('/combined-data', async (req, res) => {
+  try {
+    const prefferedMonth = req.query.month;
+    const barChartURL = `http://localhost:3000/bar-chart?month=${prefferedMonth}`;
+    const pieChartURL = `http://localhost:3000/pie-chart?month=${prefferedMonth}`;
+    const transactionURL = 'http://localhost:3000/transactions';
+
+    const [barChartData, pieChartData, transactionData] = await Promise.all([
+      axios.get(barChartURL),
+      axios.get(pieChartURL),
+      axios.get(transactionURL)
+    ]);
+
+    const combinedData = {
+      barChart: barChartData.data,
+      pieChart: pieChartData.data,
+      transactions: transactionData.data
+    };
+
+    res.status(200).json(combinedData);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch combined data' });
+  }
+});
 
 
 
