@@ -12,7 +12,7 @@ const TransactionsBarChart = () => {
 
   const fetchBarChartData = async () => {
     try {
-      const response = await axios.get('/bar-chart', {
+      const response = await axios.get('http://localhost:5000/bar-chart', {
         params: {
           month: selectedMonth,
         },

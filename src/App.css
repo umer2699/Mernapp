@@ -38,13 +38,15 @@ table {
 
 table th,
 table td {
+
+  background-color:#dff9fb;
   padding: 10px;
   text-align: left;
 }
 
 /* TransactionsTable styles */
 table th {
-  background-color: #f2f2f2;
+  background-color: whitesmoke;
 }
 
 .pagination {
@@ -70,3 +72,22 @@ table th {
   cursor: not-allowed;
 }
 
+
+
+.table {
+  font-size: 12px;
+}
+
+.table th,
+.table td {
+  padding: 0.5rem; 
+}
+
+.table img {
+  max-width: 80px; 
+}
+
+
+.btn btn-primary{
+  color: aqua;
+}
