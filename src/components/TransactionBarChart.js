@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 import '../App.css';
+import { Button } from 'bootstrap';
 
 const TransactionsBarChart = () => {
   const [selectedMonth, setSelectedMonth] = useState('March');
@@ -28,7 +30,7 @@ const TransactionsBarChart = () => {
   };
 
   return (
-    <div>
+    <div className='bar'>
       <h2>Transactions Bar Chart</h2>
       <div>
         <label htmlFor="monthSelect">Select Month:</label>
@@ -48,12 +50,19 @@ const TransactionsBarChart = () => {
         </select>
       </div>
       <div>
-        {barChartData.map((data) => (
-          <div className="chart-item" key={data.range}>
-            <span>{data.range}</span>
-            <div className="bar" style={{ width: `${data.count * 10}px` }}></div>
-          </div>
-        ))}
+        <BarChart width={730} height={250} data={barChartData} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+          <XAxis dataKey="range" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="count" fill="url(#colorGradient)" />
+          <defs>
+            <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#8884d8" />
+              <stop offset="50%" stopColor="#82ca9d" />
+              <stop offset="100%" stopColor="#8884d8" />
+            </linearGradient>
+          </defs>
+        </BarChart>
       </div>
     </div>
   );

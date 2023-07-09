@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../App.css';
 
-
-
 const TransactionsTable = () => {
   const [transactions, setTransactions] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState('March');
@@ -40,6 +38,11 @@ const TransactionsTable = () => {
 
   const handleSearch = () => {
     setCurrentPage(1); // Reset to the first page when search is triggered
+    fetchTransactions(); // Fetch transactions after setting search text and page
+  };
+
+  const handlePageChange = (e) => {
+    setCurrentPage(parseInt(e.target.value));
   };
 
   const handleNextPage = () => {
@@ -50,11 +53,19 @@ const TransactionsTable = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
 
+  const renderPageOptions = () => {
+    const options = [];
+    for (let i = 1; i <= totalPages; i++) {
+      options.push(<option key={i} value={i}>{i}</option>);
+    }
+    return options;
+  };
+
   return (
     <div className="container">
-      <h2>Transactions Table</h2>
+      
       <div className="form-group">
-        <label htmlFor="monthSelect">Select Month:</label>
+        <label htmlFor="monthSelect">Select Month-</label>
         <select id="monthSelect" className="form-control" value={selectedMonth} onChange={handleMonthChange}>
           <option value="January">January</option>
           <option value="February">February</option>
@@ -76,10 +87,11 @@ const TransactionsTable = () => {
           className="form-control"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          placeholder="Search transaction"
+          placeholder="Search Product"
         />
-        <button className="btn" onClick={handleSearch}>Search</button>
+        <button className="btn btn-primary" onClick={handleSearch}>Search</button>
       </div>
+      <h2>Transactions Table</h2>
       <div className="table-responsive">
         <table className="table">
           <thead>
@@ -120,9 +132,16 @@ const TransactionsTable = () => {
         >
           Previous
         </button>
+        <select
+          className="form-control"
+          value={currentPage}
+          onChange={handlePageChange}
+        >
+          {renderPageOptions()}
+        </select>
         <button
           className="btn btn-primary"
-          onClick={handleNextPage}  
+          onClick={handleNextPage}
           disabled={currentPage === totalPages}
         >
           Next

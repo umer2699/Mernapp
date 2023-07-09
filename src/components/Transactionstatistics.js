@@ -33,7 +33,7 @@ const TransactionStatistics = () => {
   };
 
   return (
-    <div>
+    <div className='stats'>
       <h2>Transactions Statistics</h2>
       <div>
         <label htmlFor="monthSelect">Select Month:</label>
@@ -42,10 +42,10 @@ const TransactionStatistics = () => {
           <option value="February">February</option>
           <option value="March">March</option>
           <option value="April">April</option>
-          <option value="May">May</option>
+         <option value="May">May</option>
           <option value="June">June</option>
           <option value="July">July</option>
-          <option value="August">August</option>
+                <option value="August">August</option>
           <option value="September">September</option>
           <option value="October">October</option>
           <option value="November">November</option>

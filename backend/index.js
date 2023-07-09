@@ -10,13 +10,13 @@ app.use(express.json())
 
 const allowedOrigins = ['http://localhost:3000'];
 
-// Configure CORS options
+//configuration
 const corsOptions = {
   origin: allowedOrigins,
   optionsSuccessStatus: 200,
 };
 
-// Enable CORS for all routes
+// enabled cors 
 app.use(cors(corsOptions));
 
 
@@ -76,6 +76,7 @@ app.get('/transactions', async (req, res) => {
 
   res.status(200).json(response);
 });
+
 
 
 
@@ -151,14 +152,14 @@ app.get('/bar-chart', async (req, res) => {
 
   const priceRanges = [
     { range: '0 - 100', count: 0 },
-    { range: '101 - 200', count: 0 },
-    { range: '201 - 300', count: 0 },
-    { range: '301 - 400', count: 0 },
+    { range:'101 - 200',   count: 0 },
+    { range:'201 - 300', count: 0 },
+     { range:'301 - 400', count: 0 },
     { range: '401 - 500', count: 0 },
-    { range: '501 - 600', count: 0 },
-    { range: '601 - 700', count: 0 },
-    { range: '701 - 800', count: 0 },
-    { range: '801 - 900', count: 0 },
+        { range: '501 - 600', count: 0 },
+       { range: '601 - 700', count: 0 },
+     { range: '701 - 800', count: 0 },
+     { range: '801 - 900', count: 0 },
     { range: '901 - above', count: 0 }
   ];
 
@@ -169,6 +170,7 @@ app.get('/bar-chart', async (req, res) => {
     } else if (price >= 101 && price <= 200) {
       priceRanges[1].count++;
     } else if (price >= 201 && price <= 300) {
+
       priceRanges[2].count++;
     } else if (price >= 301 && price <= 400) {
       priceRanges[3].count++;
@@ -180,10 +182,10 @@ app.get('/bar-chart', async (req, res) => {
       priceRanges[6].count++;
     } else if (price >= 701 && price <= 800) {
       priceRanges[7].count++;
-    } else if (price >= 801 && price <= 900) {
-      priceRanges[8].count++;
-    } else {
-      priceRanges[9].count++;
+    }      else if (price >= 801 && price <= 900) {
+     priceRanges[8].count++;
+    }  else {
+     priceRanges[9].count++;
     }
   });
 
@@ -255,7 +257,7 @@ app.get('/combined-data', async (req, res) => {
 
 
 
-
+//connection done 
 mongoose.set("strictQuery",false)
 mongoose.connect('mongodb://admin:admin@ac-eypf8xx-shard-00-00.zr1zvao.mongodb.net:27017,ac-eypf8xx-shard-00-01.zr1zvao.mongodb.net:27017,ac-eypf8xx-shard-00-02.zr1zvao.mongodb.net:27017/eccomerce?ssl=true&replicaSet=atlas-1jpzcv-shard-0&authSource=admin&retryWrites=true&w=majority')
 .then(()=>{

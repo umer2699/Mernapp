@@ -34,11 +34,12 @@ button {
 table {
   width: 100%;
   border-collapse: collapse;
+  border: 1px;
+
 }
 
 table th,
 table td {
-
   background-color:#dff9fb;
   padding: 10px;
   text-align: left;
@@ -47,12 +48,14 @@ table td {
 /* TransactionsTable styles */
 table th {
   background-color: whitesmoke;
+  
 }
 
 .pagination {
   margin-top: 20px;
   display: flex;
   align-items: center;
+  background-color:whitesmoke;
 }
 
 .pagination button {
@@ -64,11 +67,11 @@ table th {
 }
 
 .pagination button:hover {
-  background-color: #ccc;
+  background-color: #d83737;
 }
 
 .pagination button:disabled {
-  background-color: #e0e0e0;
+  background-color: #0076fc;
   cursor: not-allowed;
 }
 
@@ -76,6 +79,10 @@ table th {
 
 .table {
   font-size: 12px;
+  margin-top: 2%;
+  margin-right: 2%;
+
+
 }
 
 .table th,
@@ -88,6 +95,30 @@ table th {
 }
 
 
-.btn btn-primary{
-  color: aqua;
+
+
+.heading{
+   margin-left: 30%;
+   margin-right: 30%;
+}
+
+.nav{
+  color:#333;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.main{
+  background-color:#aaa69d;
+}
+
+.stats{
+  margin-top: 10%;
+  margin-left: 5%;
+}
+
+.bar{
+  margin-top: 5%;
+  margin-left: 5%;
+
 }
